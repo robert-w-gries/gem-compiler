@@ -30,10 +30,10 @@ class Gem::Compiler
     installer.build_extensions
 
     # determine build artifacts from require_paths
-    dlext    = RbConfig::CONFIG["DLEXT"]
+    exts = [RbConfig::CONFIG["DLEXT"], RbConfig::CONFIG["LIBEXT"]].join(",")
     lib_dirs = installer.spec.require_paths.join(",")
 
-    artifacts = Dir.glob("#{target_dir}/{#{lib_dirs}}/**/*.#{dlext}")
+    artifacts = Dir.glob("#{target_dir}/{#{lib_dirs}}/**/*.{#{exts}}")
 
     # build a new gemspec from the original one
     gemspec = installer.spec.dup
